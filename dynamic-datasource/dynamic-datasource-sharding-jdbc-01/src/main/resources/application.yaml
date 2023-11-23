@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:shardingsphere:classpath:config.yaml
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+
+# mybatis 配置内容
+mybatis:
+  config-location: classpath:mybatis-config.xml # 配置 MyBatis 配置文件路径
+  mapper-locations: classpath:mapper/*.xml # 配置 Mapper XML 地址
+  type-aliases-package: cn.techoc.dynamicdatasourceshardingjdbc01.entity # 配置数据库实体包路径

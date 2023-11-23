@@ -1,0 +1,34 @@
+# JDBC 逻辑库名称。在集群模式中，使用该参数来联通 ShardingSphere-JDBC 与 ShardingSphere-Proxy。
+# 默认值：logic_db
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+    props:
+      path: demo
+
+dataSources:
+  ds-users:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    jdbcUrl: jdbc:mysql://mysql.sqlpub.com:3306/ensnare2358?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: techoc76
+    password:
+    maxPoolSize: 10
+  ds-orders:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    jdbcUrl: jdbc:mysql://mysql.sqlpub.com:3306/undercook8381?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: techoc # 数据库账号
+    password:  # 数据库密码
+    maxPoolSize: 10
+
+rules:
+- !SHARDING
+    tables:
+      orders:
+        actualDataNodes: ds-orders.orders
+      users:
+        actualDataNodes: ds-users.users
+
+props:

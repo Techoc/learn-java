@@ -1,0 +1,14 @@
+spring:
+  # datasource 数据源配置内容
+  datasource:
+    # 订单数据源配置
+    users:
+      jdbc-url: jdbc:mysql://mysql.sqlpub.com:3306/undercook8381?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: techoc # 数据库账号
+      password:  # 数据库密码
+    orders:
+      jdbc-url: jdbc:mysql://mysql.sqlpub.com:3306/ensnare2358?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: techoc76
+      password:

@@ -1,0 +1,51 @@
+# JDBC 逻辑库名称。在集群模式中，使用该参数来联通 ShardingSphere-JDBC 与 ShardingSphere-Proxy。
+# 默认值：logic_db
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+    props:
+      path: demo
+
+dataSources:
+  ds_master:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://mysql.sqlpub.com:3306/ensnare2358?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: techoc76
+    password: 
+    maxPoolSize: 1
+  ds_slave_1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://mysql.sqlpub.com:3306/undercook8381?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: techoc # 数据库账号
+    password:  # 数据库密码
+    maxPoolSize: 1
+  ds_slave_2:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://gateway01.us-west-2.prod.aws.tidbcloud.com:4000/bili?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3
+    username: 2nvcS3MCjwyQUge.root
+    password:
+    maxPoolSize: 1
+
+rules:
+  - !SINGLE
+    tables:
+      # MySQL 风格
+      - "*.*" # 加载全部单表
+
+  - !READWRITE_SPLITTING
+    dataSources:
+      readwrite_ds:
+        writeDataSourceName: ds_master
+        readDataSourceNames:
+          - ds_slave_1
+          - ds_slave_2
+        loadBalancerName: round_robin
+    loadBalancers:
+      round_robin:
+        type: ROUND_ROBIN
+props:
+  sql-show: true
